@@ -1,0 +1,282 @@
+Resources:
+  vickk73vpcC05B5039:
+    Type: AWS::EC2::VPC
+    Properties:
+      CidrBlock: 10.0.0.0/16
+      EnableDnsHostnames: true
+      EnableDnsSupport: true
+      InstanceTenancy: default
+      Tags:
+        - Key: Name
+          Value: cdk/vickk73vpc
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/Resource
+  vickk73vpcPublicSubnet1SubnetD4282EF1:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.0.0.0/18
+      VpcId:
+        Ref: vickk73vpcC05B5039
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: cdk/vickk73vpc/PublicSubnet1
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/Subnet
+  vickk73vpcPublicSubnet1RouteTable5752E4B7:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: vickk73vpcC05B5039
+      Tags:
+        - Key: Name
+          Value: cdk/vickk73vpc/PublicSubnet1
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/RouteTable
+  vickk73vpcPublicSubnet1RouteTableAssociationAB608D12:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: vickk73vpcPublicSubnet1RouteTable5752E4B7
+      SubnetId:
+        Ref: vickk73vpcPublicSubnet1SubnetD4282EF1
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/RouteTableAssociation
+  vickk73vpcPublicSubnet1DefaultRouteEAED88D3:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: vickk73vpcPublicSubnet1RouteTable5752E4B7
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: vickk73vpcIGW4066F5EA
+    DependsOn:
+      - vickk73vpcVPCGW55585EC9
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/DefaultRoute
+  vickk73vpcPublicSubnet1EIP4582163F:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: cdk/vickk73vpc/PublicSubnet1
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/EIP
+  vickk73vpcPublicSubnet1NATGatewayA9E6CEE2:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - vickk73vpcPublicSubnet1EIP4582163F
+          - AllocationId
+      SubnetId:
+        Ref: vickk73vpcPublicSubnet1SubnetD4282EF1
+      Tags:
+        - Key: Name
+          Value: cdk/vickk73vpc/PublicSubnet1
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/NATGateway
+  vickk73vpcPublicSubnet2Subnet9D3782B3:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.0.64.0/18
+      VpcId:
+        Ref: vickk73vpcC05B5039
+      AvailabilityZone:
+        Fn::Select:
+          - 1
+          - Fn::GetAZs: ""
+      MapPublicIpOnLaunch: true
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Public
+        - Key: aws-cdk:subnet-type
+          Value: Public
+        - Key: Name
+          Value: cdk/vickk73vpc/PublicSubnet2
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/Subnet
+  vickk73vpcPublicSubnet2RouteTableC1361033:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: vickk73vpcC05B5039
+      Tags:
+        - Key: Name
+          Value: cdk/vickk73vpc/PublicSubnet2
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/RouteTable
+  vickk73vpcPublicSubnet2RouteTableAssociationB602A891:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: vickk73vpcPublicSubnet2RouteTableC1361033
+      SubnetId:
+        Ref: vickk73vpcPublicSubnet2Subnet9D3782B3
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/RouteTableAssociation
+  vickk73vpcPublicSubnet2DefaultRoute8AEECBC6:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: vickk73vpcPublicSubnet2RouteTableC1361033
+      DestinationCidrBlock: 0.0.0.0/0
+      GatewayId:
+        Ref: vickk73vpcIGW4066F5EA
+    DependsOn:
+      - vickk73vpcVPCGW55585EC9
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/DefaultRoute
+  vickk73vpcPublicSubnet2EIP069FFD41:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+      Tags:
+        - Key: Name
+          Value: cdk/vickk73vpc/PublicSubnet2
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/EIP
+  vickk73vpcPublicSubnet2NATGateway5BC376E2:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId:
+        Fn::GetAtt:
+          - vickk73vpcPublicSubnet2EIP069FFD41
+          - AllocationId
+      SubnetId:
+        Ref: vickk73vpcPublicSubnet2Subnet9D3782B3
+      Tags:
+        - Key: Name
+          Value: cdk/vickk73vpc/PublicSubnet2
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/NATGateway
+  vickk73vpcPrivateSubnet1SubnetDF2CB477:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.0.128.0/18
+      VpcId:
+        Ref: vickk73vpcC05B5039
+      AvailabilityZone:
+        Fn::Select:
+          - 0
+          - Fn::GetAZs: ""
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Private
+        - Key: aws-cdk:subnet-type
+          Value: Private
+        - Key: Name
+          Value: cdk/vickk73vpc/PrivateSubnet1
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet1/Subnet
+  vickk73vpcPrivateSubnet1RouteTable96FF21BF:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: vickk73vpcC05B5039
+      Tags:
+        - Key: Name
+          Value: cdk/vickk73vpc/PrivateSubnet1
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet1/RouteTable
+  vickk73vpcPrivateSubnet1RouteTableAssociation32A581B6:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: vickk73vpcPrivateSubnet1RouteTable96FF21BF
+      SubnetId:
+        Ref: vickk73vpcPrivateSubnet1SubnetDF2CB477
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet1/RouteTableAssociation
+  vickk73vpcPrivateSubnet1DefaultRoute080D863D:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: vickk73vpcPrivateSubnet1RouteTable96FF21BF
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: vickk73vpcPublicSubnet1NATGatewayA9E6CEE2
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet1/DefaultRoute
+  vickk73vpcPrivateSubnet2Subnet678171D2:
+    Type: AWS::EC2::Subnet
+    Properties:
+      CidrBlock: 10.0.192.0/18
+      VpcId:
+        Ref: vickk73vpcC05B5039
+      AvailabilityZone:
+        Fn::Select:
+          - 1
+          - Fn::GetAZs: ""
+      MapPublicIpOnLaunch: false
+      Tags:
+        - Key: aws-cdk:subnet-name
+          Value: Private
+        - Key: aws-cdk:subnet-type
+          Value: Private
+        - Key: Name
+          Value: cdk/vickk73vpc/PrivateSubnet2
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet2/Subnet
+  vickk73vpcPrivateSubnet2RouteTable64868EE6:
+    Type: AWS::EC2::RouteTable
+    Properties:
+      VpcId:
+        Ref: vickk73vpcC05B5039
+      Tags:
+        - Key: Name
+          Value: cdk/vickk73vpc/PrivateSubnet2
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet2/RouteTable
+  vickk73vpcPrivateSubnet2RouteTableAssociation76BF35D1:
+    Type: AWS::EC2::SubnetRouteTableAssociation
+    Properties:
+      RouteTableId:
+        Ref: vickk73vpcPrivateSubnet2RouteTable64868EE6
+      SubnetId:
+        Ref: vickk73vpcPrivateSubnet2Subnet678171D2
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet2/RouteTableAssociation
+  vickk73vpcPrivateSubnet2DefaultRouteB6E1AF64:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId:
+        Ref: vickk73vpcPrivateSubnet2RouteTable64868EE6
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId:
+        Ref: vickk73vpcPublicSubnet2NATGateway5BC376E2
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet2/DefaultRoute
+  vickk73vpcIGW4066F5EA:
+    Type: AWS::EC2::InternetGateway
+    Properties:
+      Tags:
+        - Key: Name
+          Value: cdk/vickk73vpc
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/IGW
+  vickk73vpcVPCGW55585EC9:
+    Type: AWS::EC2::VPCGatewayAttachment
+    Properties:
+      VpcId:
+        Ref: vickk73vpcC05B5039
+      InternetGatewayId:
+        Ref: vickk73vpcIGW4066F5EA
+    Metadata:
+      aws:cdk:path: cdk/vickk73vpc/VPCGW
+  CDKMetadata:
+    Type: AWS::CDK::Metadata
+    Properties:
+      Modules: aws-cdk=1.76.0,@aws-cdk/assets=1.76.0,@aws-cdk/aws-applicationautoscaling=1.76.0,@aws-cdk/aws-autoscaling-common=1.76.0,@aws-cdk/aws-cloudwatch=1.76.0,@aws-cdk/aws-codeguruprofiler=1.76.0,@aws-cdk/aws-ec2=1.76.0,@aws-cdk/aws-ecr=1.76.0,@aws-cdk/aws-ecr-assets=1.76.0,@aws-cdk/aws-efs=1.76.0,@aws-cdk/aws-events=1.76.0,@aws-cdk/aws-iam=1.76.0,@aws-cdk/aws-kms=1.76.0,@aws-cdk/aws-lambda=1.76.0,@aws-cdk/aws-logs=1.76.0,@aws-cdk/aws-s3=1.76.0,@aws-cdk/aws-s3-assets=1.76.0,@aws-cdk/aws-sns=1.76.0,@aws-cdk/aws-sns-subscriptions=1.76.0,@aws-cdk/aws-sqs=1.76.0,@aws-cdk/aws-ssm=1.76.0,@aws-cdk/cloud-assembly-schema=1.76.0,@aws-cdk/core=1.76.0,@aws-cdk/cx-api=1.76.0,@aws-cdk/region-info=1.76.0,jsii-runtime=Python/3.8.3
+    Metadata:
+      aws:cdk:path: cdk/CDKMetadata/Default
