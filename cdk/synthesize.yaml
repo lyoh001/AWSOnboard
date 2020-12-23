@@ -1,8 +1,8 @@
 Resources:
   vickk73s305FE426A:
-    Type: AWS::S3::Bucket      
+    Type: AWS::S3::Bucket
     UpdateReplacePolicy: Retain
-    DeletionPolicy: Retain     
+    DeletionPolicy: Retain
     Metadata:
       aws:cdk:path: cdk/vickk73s3/Resource
   vickk73lambdaServiceRoleFCC4FA26:
