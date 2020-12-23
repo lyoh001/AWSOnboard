@@ -14,13 +14,13 @@ class CdkStack(core.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         prefix = "vickk73"
-        bucket = s3.Bucket(self, f"{prefix}s3")
-        handler = lambda_.Function(self, f"{prefix}lambda", runtime=lambda_.Runtime.PYTHON_3_8, code=lambda_.Code.asset("lambda"), handler="lambda_function.lambda_handler", environment=dict(BUCKET=bucket.bucket_name))
-        bucket.grant_read_write(handler)
-        api = apigateway.RestApi(self, f"{prefix}api", rest_api_name=f"{prefix}api", description=f"{prefix} rest api gateway.")
-        get_widgets_integration = apigateway.LambdaIntegration(handler,
-                request_templates={"application/json": '{ "statusCode": "200" }'})
-        api.root.add_method("GET", get_widgets_integration)
+        # bucket = s3.Bucket(self, f"{prefix}s3")
+        # handler = lambda_.Function(self, f"{prefix}lambda", runtime=lambda_.Runtime.PYTHON_3_8, code=lambda_.Code.asset("lambda"), handler="lambda_function.lambda_handler", environment=dict(BUCKET=bucket.bucket_name))
+        # bucket.grant_read_write(handler)
+        # api = apigateway.RestApi(self, f"{prefix}api", rest_api_name=f"{prefix}api", description=f"{prefix} rest api gateway.")
+        # get_widgets_integration = apigateway.LambdaIntegration(handler,
+        #         request_templates={"application/json": '{ "statusCode": "200" }'})
+        # api.root.add_method("GET", get_widgets_integration)
 
         queue = sqs.Queue(
             self, f"{prefix}sqs",
