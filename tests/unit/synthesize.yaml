@@ -1,282 +1,289 @@
 Resources:
-  vickk73vpcC05B5039:
-    Type: AWS::EC2::VPC
-    Properties:
-      CidrBlock: 10.0.0.0/16
-      EnableDnsHostnames: true
-      EnableDnsSupport: true
-      InstanceTenancy: default
-      Tags:
-        - Key: Name
-          Value: cdk/vickk73vpc
+  vickk73s305FE426A:
+    Type: AWS::S3::Bucket      
+    UpdateReplacePolicy: Retain
+    DeletionPolicy: Retain     
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/Resource
-  vickk73vpcPublicSubnet1SubnetD4282EF1:
-    Type: AWS::EC2::Subnet
+      aws:cdk:path: cdk/vickk73s3/Resource
+  vickk73lambdaServiceRoleFCC4FA26:
+    Type: AWS::IAM::Role
     Properties:
-      CidrBlock: 10.0.0.0/18
-      VpcId:
-        Ref: vickk73vpcC05B5039
-      AvailabilityZone:
-        Fn::Select:
-          - 0
-          - Fn::GetAZs: ""
-      MapPublicIpOnLaunch: true
-      Tags:
-        - Key: aws-cdk:subnet-name
-          Value: Public
-        - Key: aws-cdk:subnet-type
-          Value: Public
-        - Key: Name
-          Value: cdk/vickk73vpc/PublicSubnet1
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/Subnet
-  vickk73vpcPublicSubnet1RouteTable5752E4B7:
-    Type: AWS::EC2::RouteTable
+      aws:cdk:path: cdk/vickk73lambda/ServiceRole/Resource
+  vickk73lambdaServiceRoleDefaultPolicyFB85E382:
+    Type: AWS::IAM::Policy
     Properties:
-      VpcId:
-        Ref: vickk73vpcC05B5039
-      Tags:
-        - Key: Name
-          Value: cdk/vickk73vpc/PublicSubnet1
+      PolicyDocument:
+        Statement:
+          - Action:
+              - s3:GetObject*
+              - s3:GetBucket*
+              - s3:List*
+              - s3:DeleteObject*
+              - s3:PutObject*
+              - s3:Abort*
+            Effect: Allow
+            Resource:
+              - Fn::GetAtt:
+                  - vickk73s305FE426A
+                  - Arn
+              - Fn::Join:
+                  - ""
+                  - - Fn::GetAtt:
+                        - vickk73s305FE426A
+                        - Arn
+                    - /*
+        Version: "2012-10-17"
+      PolicyName: vickk73lambdaServiceRoleDefaultPolicyFB85E382
+      Roles:
+        - Ref: vickk73lambdaServiceRoleFCC4FA26
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/RouteTable
-  vickk73vpcPublicSubnet1RouteTableAssociationAB608D12:
-    Type: AWS::EC2::SubnetRouteTableAssociation
+      aws:cdk:path: cdk/vickk73lambda/ServiceRole/DefaultPolicy/Resource
+  vickk73lambda65C61E7A:
+    Type: AWS::Lambda::Function
     Properties:
-      RouteTableId:
-        Ref: vickk73vpcPublicSubnet1RouteTable5752E4B7
-      SubnetId:
-        Ref: vickk73vpcPublicSubnet1SubnetD4282EF1
-    Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/RouteTableAssociation
-  vickk73vpcPublicSubnet1DefaultRouteEAED88D3:
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId:
-        Ref: vickk73vpcPublicSubnet1RouteTable5752E4B7
-      DestinationCidrBlock: 0.0.0.0/0
-      GatewayId:
-        Ref: vickk73vpcIGW4066F5EA
-    DependsOn:
-      - vickk73vpcVPCGW55585EC9
-    Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/DefaultRoute
-  vickk73vpcPublicSubnet1EIP4582163F:
-    Type: AWS::EC2::EIP
-    Properties:
-      Domain: vpc
-      Tags:
-        - Key: Name
-          Value: cdk/vickk73vpc/PublicSubnet1
-    Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/EIP
-  vickk73vpcPublicSubnet1NATGatewayA9E6CEE2:
-    Type: AWS::EC2::NatGateway
-    Properties:
-      AllocationId:
+      Code:
+        S3Bucket:
+          Ref: AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1S3Bucket53ADA609
+        S3Key:
+          Fn::Join:
+            - ""
+            - - Fn::Select:
+                  - 0
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1S3VersionKey2AEFFB8C
+              - Fn::Select:
+                  - 1
+                  - Fn::Split:
+                      - "||"
+                      - Ref: AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1S3VersionKey2AEFFB8C
+      Handler: lambda_function.lambda_handler
+      Role:
         Fn::GetAtt:
-          - vickk73vpcPublicSubnet1EIP4582163F
-          - AllocationId
-      SubnetId:
-        Ref: vickk73vpcPublicSubnet1SubnetD4282EF1
-      Tags:
-        - Key: Name
-          Value: cdk/vickk73vpc/PublicSubnet1
-    Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet1/NATGateway
-  vickk73vpcPublicSubnet2Subnet9D3782B3:
-    Type: AWS::EC2::Subnet
-    Properties:
-      CidrBlock: 10.0.64.0/18
-      VpcId:
-        Ref: vickk73vpcC05B5039
-      AvailabilityZone:
-        Fn::Select:
-          - 1
-          - Fn::GetAZs: ""
-      MapPublicIpOnLaunch: true
-      Tags:
-        - Key: aws-cdk:subnet-name
-          Value: Public
-        - Key: aws-cdk:subnet-type
-          Value: Public
-        - Key: Name
-          Value: cdk/vickk73vpc/PublicSubnet2
-    Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/Subnet
-  vickk73vpcPublicSubnet2RouteTableC1361033:
-    Type: AWS::EC2::RouteTable
-    Properties:
-      VpcId:
-        Ref: vickk73vpcC05B5039
-      Tags:
-        - Key: Name
-          Value: cdk/vickk73vpc/PublicSubnet2
-    Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/RouteTable
-  vickk73vpcPublicSubnet2RouteTableAssociationB602A891:
-    Type: AWS::EC2::SubnetRouteTableAssociation
-    Properties:
-      RouteTableId:
-        Ref: vickk73vpcPublicSubnet2RouteTableC1361033
-      SubnetId:
-        Ref: vickk73vpcPublicSubnet2Subnet9D3782B3
-    Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/RouteTableAssociation
-  vickk73vpcPublicSubnet2DefaultRoute8AEECBC6:
-    Type: AWS::EC2::Route
-    Properties:
-      RouteTableId:
-        Ref: vickk73vpcPublicSubnet2RouteTableC1361033
-      DestinationCidrBlock: 0.0.0.0/0
-      GatewayId:
-        Ref: vickk73vpcIGW4066F5EA
+          - vickk73lambdaServiceRoleFCC4FA26
+          - Arn
+      Runtime: python3.8
+      Environment:
+        Variables:
+          BUCKET:
+            Ref: vickk73s305FE426A
     DependsOn:
-      - vickk73vpcVPCGW55585EC9
+      - vickk73lambdaServiceRoleDefaultPolicyFB85E382
+      - vickk73lambdaServiceRoleFCC4FA26
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/DefaultRoute
-  vickk73vpcPublicSubnet2EIP069FFD41:
-    Type: AWS::EC2::EIP
+      aws:cdk:path: cdk/vickk73lambda/Resource
+      aws:asset:path: asset.3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1
+      aws:asset:property: Code
+  vickk73apiA0E5E273:
+    Type: AWS::ApiGateway::RestApi
     Properties:
-      Domain: vpc
-      Tags:
-        - Key: Name
-          Value: cdk/vickk73vpc/PublicSubnet2
+      Description: vickk73 rest api gateway.
+      Name: vickk73api
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/EIP
-  vickk73vpcPublicSubnet2NATGateway5BC376E2:
-    Type: AWS::EC2::NatGateway
+      aws:cdk:path: cdk/vickk73api/Resource
+  vickk73apiCloudWatchRole3205AA37:
+    Type: AWS::IAM::Role
     Properties:
-      AllocationId:
+      AssumeRolePolicyDocument:
+        Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: apigateway.amazonaws.com
+        Version: "2012-10-17"
+      ManagedPolicyArns:
+        - Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs
+    Metadata:
+      aws:cdk:path: cdk/vickk73api/CloudWatchRole/Resource
+  vickk73apiAccountACFB55DD:
+    Type: AWS::ApiGateway::Account
+    Properties:
+      CloudWatchRoleArn:
         Fn::GetAtt:
-          - vickk73vpcPublicSubnet2EIP069FFD41
-          - AllocationId
-      SubnetId:
-        Ref: vickk73vpcPublicSubnet2Subnet9D3782B3
-      Tags:
-        - Key: Name
-          Value: cdk/vickk73vpc/PublicSubnet2
+          - vickk73apiCloudWatchRole3205AA37
+          - Arn
+    DependsOn:
+      - vickk73apiA0E5E273
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PublicSubnet2/NATGateway
-  vickk73vpcPrivateSubnet1SubnetDF2CB477:
-    Type: AWS::EC2::Subnet
+      aws:cdk:path: cdk/vickk73api/Account
+  vickk73apiDeploymentE5A0F9A71ba937577ca6ea52df33966431745c90:
+    Type: AWS::ApiGateway::Deployment
     Properties:
-      CidrBlock: 10.0.128.0/18
-      VpcId:
-        Ref: vickk73vpcC05B5039
-      AvailabilityZone:
-        Fn::Select:
-          - 0
-          - Fn::GetAZs: ""
-      MapPublicIpOnLaunch: false
-      Tags:
-        - Key: aws-cdk:subnet-name
-          Value: Private
-        - Key: aws-cdk:subnet-type
-          Value: Private
-        - Key: Name
-          Value: cdk/vickk73vpc/PrivateSubnet1
+      RestApiId:
+        Ref: vickk73apiA0E5E273
+      Description: Automatically created by the RestApi construct
+    DependsOn:
+      - vickk73apiGET77CF837E
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet1/Subnet
-  vickk73vpcPrivateSubnet1RouteTable96FF21BF:
-    Type: AWS::EC2::RouteTable
+      aws:cdk:path: cdk/vickk73api/Deployment/Resource
+  vickk73apiDeploymentStageprodF910FAB1:
+    Type: AWS::ApiGateway::Stage
     Properties:
-      VpcId:
-        Ref: vickk73vpcC05B5039
-      Tags:
-        - Key: Name
-          Value: cdk/vickk73vpc/PrivateSubnet1
+      RestApiId:
+        Ref: vickk73apiA0E5E273
+      DeploymentId:
+        Ref: vickk73apiDeploymentE5A0F9A71ba937577ca6ea52df33966431745c90
+      StageName: prod
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet1/RouteTable
-  vickk73vpcPrivateSubnet1RouteTableAssociation32A581B6:
-    Type: AWS::EC2::SubnetRouteTableAssociation
+      aws:cdk:path: cdk/vickk73api/DeploymentStage.prod/Resource
+  vickk73apiGETApiPermissioncdkvickk73api2375B0E4GETCE013E76:
+    Type: AWS::Lambda::Permission
     Properties:
-      RouteTableId:
-        Ref: vickk73vpcPrivateSubnet1RouteTable96FF21BF
-      SubnetId:
-        Ref: vickk73vpcPrivateSubnet1SubnetDF2CB477
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - vickk73lambda65C61E7A
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:ap-southeast-2:"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: vickk73apiA0E5E273
+            - /
+            - Ref: vickk73apiDeploymentStageprodF910FAB1
+            - /GET/
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet1/RouteTableAssociation
-  vickk73vpcPrivateSubnet1DefaultRoute080D863D:
-    Type: AWS::EC2::Route
+      aws:cdk:path: cdk/vickk73api/Default/GET/ApiPermission.cdkvickk73api2375B0E4.GET..
+  vickk73apiGETApiPermissionTestcdkvickk73api2375B0E4GET6C074CAA:
+    Type: AWS::Lambda::Permission
     Properties:
-      RouteTableId:
-        Ref: vickk73vpcPrivateSubnet1RouteTable96FF21BF
-      DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId:
-        Ref: vickk73vpcPublicSubnet1NATGatewayA9E6CEE2
+      Action: lambda:InvokeFunction
+      FunctionName:
+        Fn::GetAtt:
+          - vickk73lambda65C61E7A
+          - Arn
+      Principal: apigateway.amazonaws.com
+      SourceArn:
+        Fn::Join:
+          - ""
+          - - "arn:"
+            - Ref: AWS::Partition
+            - ":execute-api:ap-southeast-2:"
+            - Ref: AWS::AccountId
+            - ":"
+            - Ref: vickk73apiA0E5E273
+            - /test-invoke-stage/GET/
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet1/DefaultRoute
-  vickk73vpcPrivateSubnet2Subnet678171D2:
-    Type: AWS::EC2::Subnet
+      aws:cdk:path: cdk/vickk73api/Default/GET/ApiPermission.Test.cdkvickk73api2375B0E4.GET..
+  vickk73apiGET77CF837E:
+    Type: AWS::ApiGateway::Method
     Properties:
-      CidrBlock: 10.0.192.0/18
-      VpcId:
-        Ref: vickk73vpcC05B5039
-      AvailabilityZone:
-        Fn::Select:
-          - 1
-          - Fn::GetAZs: ""
-      MapPublicIpOnLaunch: false
-      Tags:
-        - Key: aws-cdk:subnet-name
-          Value: Private
-        - Key: aws-cdk:subnet-type
-          Value: Private
-        - Key: Name
-          Value: cdk/vickk73vpc/PrivateSubnet2
+      HttpMethod: GET
+      ResourceId:
+        Fn::GetAtt:
+          - vickk73apiA0E5E273
+          - RootResourceId
+      RestApiId:
+        Ref: vickk73apiA0E5E273
+      AuthorizationType: NONE
+      Integration:
+        IntegrationHttpMethod: POST
+        RequestTemplates:
+          application/json: '{ "statusCode": "200" }'
+        Type: AWS_PROXY
+        Uri:
+          Fn::Join:
+            - ""
+            - - "arn:"
+              - Ref: AWS::Partition
+              - :apigateway:ap-southeast-2:lambda:path/2015-03-31/functions/
+              - Fn::GetAtt:
+                  - vickk73lambda65C61E7A
+                  - Arn
+              - /invocations
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet2/Subnet
-  vickk73vpcPrivateSubnet2RouteTable64868EE6:
-    Type: AWS::EC2::RouteTable
+      aws:cdk:path: cdk/vickk73api/Default/GET/Resource
+  vickk73sqs64374BD7:
+    Type: AWS::SQS::Queue
     Properties:
-      VpcId:
-        Ref: vickk73vpcC05B5039
-      Tags:
-        - Key: Name
-          Value: cdk/vickk73vpc/PrivateSubnet2
+      VisibilityTimeout: 300
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet2/RouteTable
-  vickk73vpcPrivateSubnet2RouteTableAssociation76BF35D1:
-    Type: AWS::EC2::SubnetRouteTableAssociation
+      aws:cdk:path: cdk/vickk73sqs/Resource
+  vickk73sqsPolicy1628A66C:
+    Type: AWS::SQS::QueuePolicy
     Properties:
-      RouteTableId:
-        Ref: vickk73vpcPrivateSubnet2RouteTable64868EE6
-      SubnetId:
-        Ref: vickk73vpcPrivateSubnet2Subnet678171D2
+      PolicyDocument:
+        Statement:
+          - Action: sqs:SendMessage
+            Condition:
+              ArnEquals:
+                aws:SourceArn:
+                  Ref: vickk73sns02904965
+            Effect: Allow
+            Principal:
+              Service: sns.amazonaws.com
+            Resource:
+              Fn::GetAtt:
+                - vickk73sqs64374BD7
+                - Arn
+        Version: "2012-10-17"
+      Queues:
+        - Ref: vickk73sqs64374BD7
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet2/RouteTableAssociation
-  vickk73vpcPrivateSubnet2DefaultRouteB6E1AF64:
-    Type: AWS::EC2::Route
+      aws:cdk:path: cdk/vickk73sqs/Policy/Resource
+  vickk73sqscdkvickk73sns0D2BD2A21FA20677:
+    Type: AWS::SNS::Subscription
     Properties:
-      RouteTableId:
-        Ref: vickk73vpcPrivateSubnet2RouteTable64868EE6
-      DestinationCidrBlock: 0.0.0.0/0
-      NatGatewayId:
-        Ref: vickk73vpcPublicSubnet2NATGateway5BC376E2
+      Protocol: sqs
+      TopicArn:
+        Ref: vickk73sns02904965
+      Endpoint:
+        Fn::GetAtt:
+          - vickk73sqs64374BD7
+          - Arn
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/PrivateSubnet2/DefaultRoute
-  vickk73vpcIGW4066F5EA:
-    Type: AWS::EC2::InternetGateway
-    Properties:
-      Tags:
-        - Key: Name
-          Value: cdk/vickk73vpc
+      aws:cdk:path: cdk/vickk73sqs/cdkvickk73sns0D2BD2A2/Resource
+  vickk73sns02904965:
+    Type: AWS::SNS::Topic
     Metadata:
-      aws:cdk:path: cdk/vickk73vpc/IGW
-  vickk73vpcVPCGW55585EC9:
-    Type: AWS::EC2::VPCGatewayAttachment
-    Properties:
-      VpcId:
-        Ref: vickk73vpcC05B5039
-      InternetGatewayId:
-        Ref: vickk73vpcIGW4066F5EA
-    Metadata:
-      aws:cdk:path: cdk/vickk73vpc/VPCGW
+      aws:cdk:path: cdk/vickk73sns/Resource
   CDKMetadata:
     Type: AWS::CDK::Metadata
     Properties:
-      Modules: aws-cdk=1.76.0,@aws-cdk/assets=1.76.0,@aws-cdk/aws-applicationautoscaling=1.76.0,@aws-cdk/aws-autoscaling-common=1.76.0,@aws-cdk/aws-cloudwatch=1.76.0,@aws-cdk/aws-codeguruprofiler=1.76.0,@aws-cdk/aws-ec2=1.76.0,@aws-cdk/aws-ecr=1.76.0,@aws-cdk/aws-ecr-assets=1.76.0,@aws-cdk/aws-efs=1.76.0,@aws-cdk/aws-events=1.76.0,@aws-cdk/aws-iam=1.76.0,@aws-cdk/aws-kms=1.76.0,@aws-cdk/aws-lambda=1.76.0,@aws-cdk/aws-logs=1.76.0,@aws-cdk/aws-s3=1.76.0,@aws-cdk/aws-s3-assets=1.76.0,@aws-cdk/aws-sns=1.76.0,@aws-cdk/aws-sns-subscriptions=1.76.0,@aws-cdk/aws-sqs=1.76.0,@aws-cdk/aws-ssm=1.76.0,@aws-cdk/cloud-assembly-schema=1.76.0,@aws-cdk/core=1.76.0,@aws-cdk/cx-api=1.76.0,@aws-cdk/region-info=1.76.0,jsii-runtime=Python/3.8.3
-    Metadata:
+      Modules: aws-cdk=1.76.0,@aws-cdk/assets=1.76.0,@aws-cdk/aws-apigateway=1.76.0,@aws-cdk/aws-applicationautoscaling=1.76.0,@aws-cdk/aws-autoscaling-common=1.76.0,@aws-cdk/aws-certificatemanager=1.76.0,@aws-cdk/aws-cloudwatch=1.76.0,@aws-cdk/aws-codeguruprofiler=1.76.0,@aws-cdk/aws-ec2=1.76.0,@aws-cdk/aws-ecr=1.76.0,@aws-cdk/aws-ecr-assets=1.76.0,@aws-cdk/aws-efs=1.76.0,@aws-cdk/aws-elasticloadbalancingv2=1.76.0,@aws-cdk/aws-events=1.76.0,@aws-cdk/aws-iam=1.76.0,@aws-cdk/aws-kms=1.76.0,@aws-cdk/aws-lambda=1.76.0,@aws-cdk/aws-logs=1.76.0,@aws-cdk/aws-route53=1.76.0,@aws-cdk/aws-s3=1.76.0,@aws-cdk/aws-s3-assets=1.76.0,@aws-cdk/aws-sns=1.76.0,@aws-cdk/aws-sns-subscriptions=1.76.0,@aws-cdk/aws-sqs=1.76.0,@aws-cdk/aws-ssm=1.76.0,@aws-cdk/cloud-assembly-schema=1.76.0,@aws-cdk/core=1.76.0,@aws-cdk/cx-api=1.76.0,@aws-cdk/region-info=1.76.0,jsii-runtime=Python/3.8.3    Metadata:
       aws:cdk:path: cdk/CDKMetadata/Default
+Parameters:
+  AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1S3Bucket53ADA609:
+    Type: String
+    Description: S3 bucket for asset "3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1"
+  AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1S3VersionKey2AEFFB8C:
+    Type: String
+    Description: S3 key for asset version "3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1"
+  AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1ArtifactHash0A6ECDAF:
+    Type: String
+    Description: Artifact hash for asset "3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1"
+Outputs:
+  vickk73apiEndpoint09460FD3:
+    Value:
+      Fn::Join:
+        - ""
+        - - https://
+          - Ref: vickk73apiA0E5E273
+          - .execute-api.ap-southeast-2.
+          - Ref: AWS::URLSuffix
+          - /
+          - Ref: vickk73apiDeploymentStageprodF910FAB1
+          - /
