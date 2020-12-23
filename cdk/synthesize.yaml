@@ -57,7 +57,7 @@ Resources:
     Properties:
       Code:
         S3Bucket:
-          Ref: AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1S3Bucket53ADA609
+          Ref: AssetParameters98410b4463f2dc1c27d9da061f623ebd6b0844e8b0f4d83ee0f66cee14c63cbcS3BucketA66C55C5
         S3Key:
           Fn::Join:
             - ""
@@ -65,12 +65,12 @@ Resources:
                   - 0
                   - Fn::Split:
                       - "||"
-                      - Ref: AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1S3VersionKey2AEFFB8C
+                      - Ref: AssetParameters98410b4463f2dc1c27d9da061f623ebd6b0844e8b0f4d83ee0f66cee14c63cbcS3VersionKey5F092ED6
               - Fn::Select:
                   - 1
                   - Fn::Split:
                       - "||"
-                      - Ref: AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1S3VersionKey2AEFFB8C
+                      - Ref: AssetParameters98410b4463f2dc1c27d9da061f623ebd6b0844e8b0f4d83ee0f66cee14c63cbcS3VersionKey5F092ED6
       Handler: lambda_function.lambda_handler
       Role:
         Fn::GetAtt:
@@ -86,7 +86,7 @@ Resources:
       - vickk73lambdaServiceRoleFCC4FA26
     Metadata:
       aws:cdk:path: cdk/vickk73lambda/Resource
-      aws:asset:path: asset.3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1
+      aws:asset:path: asset.98410b4463f2dc1c27d9da061f623ebd6b0844e8b0f4d83ee0f66cee14c63cbc
       aws:asset:property: Code
   vickk73apiA0E5E273:
     Type: AWS::ApiGateway::RestApi
@@ -263,18 +263,19 @@ Resources:
   CDKMetadata:
     Type: AWS::CDK::Metadata
     Properties:
-      Modules: aws-cdk=1.76.0,@aws-cdk/assets=1.76.0,@aws-cdk/aws-apigateway=1.76.0,@aws-cdk/aws-applicationautoscaling=1.76.0,@aws-cdk/aws-autoscaling-common=1.76.0,@aws-cdk/aws-certificatemanager=1.76.0,@aws-cdk/aws-cloudwatch=1.76.0,@aws-cdk/aws-codeguruprofiler=1.76.0,@aws-cdk/aws-ec2=1.76.0,@aws-cdk/aws-ecr=1.76.0,@aws-cdk/aws-ecr-assets=1.76.0,@aws-cdk/aws-efs=1.76.0,@aws-cdk/aws-elasticloadbalancingv2=1.76.0,@aws-cdk/aws-events=1.76.0,@aws-cdk/aws-iam=1.76.0,@aws-cdk/aws-kms=1.76.0,@aws-cdk/aws-lambda=1.76.0,@aws-cdk/aws-logs=1.76.0,@aws-cdk/aws-route53=1.76.0,@aws-cdk/aws-s3=1.76.0,@aws-cdk/aws-s3-assets=1.76.0,@aws-cdk/aws-sns=1.76.0,@aws-cdk/aws-sns-subscriptions=1.76.0,@aws-cdk/aws-sqs=1.76.0,@aws-cdk/aws-ssm=1.76.0,@aws-cdk/cloud-assembly-schema=1.76.0,@aws-cdk/core=1.76.0,@aws-cdk/cx-api=1.76.0,@aws-cdk/region-info=1.76.0,jsii-runtime=Python/3.8.3    Metadata:
+      Modules: aws-cdk=1.80.0,@aws-cdk/assets=1.76.0,@aws-cdk/aws-apigateway=1.76.0,@aws-cdk/aws-applicationautoscaling=1.76.0,@aws-cdk/aws-autoscaling-common=1.76.0,@aws-cdk/aws-certificatemanager=1.76.0,@aws-cdk/aws-cloudwatch=1.76.0,@aws-cdk/aws-codeguruprofiler=1.76.0,@aws-cdk/aws-ec2=1.76.0,@aws-cdk/aws-ecr=1.76.0,@aws-cdk/aws-ecr-assets=1.76.0,@aws-cdk/aws-efs=1.76.0,@aws-cdk/aws-elasticloadbalancingv2=1.76.0,@aws-cdk/aws-events=1.76.0,@aws-cdk/aws-iam=1.76.0,@aws-cdk/aws-kms=1.76.0,@aws-cdk/aws-lambda=1.76.0,@aws-cdk/aws-logs=1.76.0,@aws-cdk/aws-route53=1.76.0,@aws-cdk/aws-s3=1.76.0,@aws-cdk/aws-s3-assets=1.76.0,@aws-cdk/aws-sns=1.76.0,@aws-cdk/aws-sns-subscriptions=1.76.0,@aws-cdk/aws-sqs=1.76.0,@aws-cdk/aws-ssm=1.76.0,@aws-cdk/cloud-assembly-schema=1.76.0,@aws-cdk/core=1.76.0,@aws-cdk/cx-api=1.76.0,@aws-cdk/region-info=1.76.0,jsii-runtime=Python/3.8.3
+    Metadata:
       aws:cdk:path: cdk/CDKMetadata/Default
 Parameters:
-  AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1S3Bucket53ADA609:
+  AssetParameters98410b4463f2dc1c27d9da061f623ebd6b0844e8b0f4d83ee0f66cee14c63cbcS3BucketA66C55C5:
     Type: String
-    Description: S3 bucket for asset "3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1"
-  AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1S3VersionKey2AEFFB8C:
+    Description: S3 bucket for asset "98410b4463f2dc1c27d9da061f623ebd6b0844e8b0f4d83ee0f66cee14c63cbc"
+  AssetParameters98410b4463f2dc1c27d9da061f623ebd6b0844e8b0f4d83ee0f66cee14c63cbcS3VersionKey5F092ED6:
     Type: String
-    Description: S3 key for asset version "3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1"
-  AssetParameters3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1ArtifactHash0A6ECDAF:
+    Description: S3 key for asset version "98410b4463f2dc1c27d9da061f623ebd6b0844e8b0f4d83ee0f66cee14c63cbc"
+  AssetParameters98410b4463f2dc1c27d9da061f623ebd6b0844e8b0f4d83ee0f66cee14c63cbcArtifactHashAF68F6CD:
     Type: String
-    Description: Artifact hash for asset "3db22375158de1e77dcd85f3d5b682c4ec6cda986a4f8951fea1d19281bac7f1"
+    Description: Artifact hash for asset "98410b4463f2dc1c27d9da061f623ebd6b0844e8b0f4d83ee0f66cee14c63cbc"
 Outputs:
   vickk73apiEndpoint09460FD3:
     Value:
