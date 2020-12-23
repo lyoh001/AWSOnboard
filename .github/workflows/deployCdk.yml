@@ -17,7 +17,7 @@ jobs:
       uses: aws-actions/aws-cloudformation-github-deploy@v1
       with:
         name: cdk_stack
-        template: .cdk/synthesize.yaml
+        template: cdk/synthesize.yaml
 
       # output containerName variable from template
     - run: echo ${{ steps.deploy.outputs.containerName }}
