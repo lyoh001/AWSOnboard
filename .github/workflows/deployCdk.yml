@@ -1,19 +1,8 @@
----
-
-name: CDK
-
-on:
-  push:
-    branches: master
-  workflow_dispatch:
-
+on: [push]
+name: AWS CloudFormation
 jobs:
-  apply:
-    name: CDK deploy
+  build-and-deploy:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: cdk
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
