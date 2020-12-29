@@ -13,7 +13,7 @@ class CdkStack(core.Stack):
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        prefix = "johnlee"
+        prefix = "vickk73"
         bucket = s3.Bucket(self, f"{prefix}s3")
         handler = lambda_.Function(self, f"{prefix}lambda", runtime=lambda_.Runtime.PYTHON_3_8, code=lambda_.Code.asset("lambda"), handler="lambda_function.lambda_handler", environment=dict(BUCKET=bucket.bucket_name))
         bucket.grant_read_write(handler)
@@ -31,7 +31,7 @@ class CdkStack(core.Stack):
         )
         topic.add_subscription(subs.SqsSubscription(queue))
 
-        # vpc = ec2.Vpc(self, "vickk73vpc", cidr="10.0.0.0/16")
+        # vpc = ec2.Vpc(self, f"{prefix}vpc", cidr="10.0.0.0/16")
         # selection = vpc.select_subnets(subnet_type=ec2.SubnetType.PRIVATE)
         # for subnet in selection.subnets:
         #     pass
