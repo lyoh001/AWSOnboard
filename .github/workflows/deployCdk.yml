@@ -1,23 +1,28 @@
 on: [push]
-name: AWS CloudFormation
+name: AWS Cdk
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      # Checkout code
-    - uses: actions/checkout@main
-      # Log into Azure
-    - uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
-      # Deploy AWS CloudFormation template
-    - name: Deploy to AWS CloudFormation
-      uses: aws-actions/aws-cloudformation-github-deploy@v1
-      with:
-        name: cdk
-        template: cdk/synthesize.yaml
-
-      # output containerName variable from template
-    - run: echo ${{ steps.deploy.outputs.containerName }}
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Install python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install Node JS
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+      - name: Install requirements
+        run: |
+          pip install -r requirements.txt
+          npm install -g aws-cdk
+      - name: Run CDK
+        run: |
+          cdk diff
+          cdk deploy --require-approval=never
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
