@@ -2,10 +2,9 @@ def lambda_handler(event, context):
     try:
         print("---------------Starting lambda function---------------")
         print(f"Payload: {(payload := event.get('queryStringParameters'))}")
-        x = float(payload["x"])
-        y = float(payload["y"])
-        val = {" ": x+y, "-": x-y, "*": x*y, "/": x/y}.get(payload["op"])
-        return {"statusCode": "200", "body": f"Payload: {val}"}
+        x, y = float(payload["x"]), float(payload["y"])
+        return_val = {" ": x+y, "-": x-y, "*": x*y, "/": x/y}[payload["op"]]
+        return {"statusCode": "200", "body": f"Payload: {return_val}"}
         
     except Exception as e:
         print(f"Exception: {e}")
