@@ -29,8 +29,7 @@ class CdkStack(core.Stack):
         topic = sns.Topic(
             self, f"{prefix}sns"
         )
-        topic.add_subscription(subs.SqsSubscription(queue))
-
+        # topic.add_subscription(subs.SqsSubscription(queue))
         # vpc = ec2.Vpc(self, f"{prefix}vpc", cidr="10.0.0.0/16")
         # selection = vpc.select_subnets(subnet_type=ec2.SubnetType.PRIVATE)
         # for subnet in selection.subnets:
