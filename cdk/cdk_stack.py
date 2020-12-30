@@ -13,7 +13,7 @@ class CdkStack(core.Stack):
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        prefix = "vickk73"
+        prefix = "calculator"
         bucket = s3.Bucket(self, f"{prefix}s3")
         handler = lambda_.Function(self, f"{prefix}lambda", runtime=lambda_.Runtime.PYTHON_3_8, code=lambda_.Code.asset("lambda"), handler="lambda_function.lambda_handler", environment=dict(BUCKET=bucket.bucket_name))
         bucket.grant_read_write(handler)
