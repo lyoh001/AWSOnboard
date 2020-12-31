@@ -3,8 +3,8 @@ def lambda_handler(event, context):
         print("---------------Starting lambda function---------------")
         print(f"Payload: {(payload := event.get('queryStringParameters'))}")
         x, y = float(payload["x"]), float(payload["y"])
-        return_val = {" ": x+y, "-": x-y, "*": x*y, "/": x/y}[payload["op"]]
-        return {"statusCode": "200", "body": f"Payload: {return_val}"}
+        answer = {" ": x+y, "-": x-y, "*": x*y, "/": x/y}[payload["op"]]
+        return {"statusCode": "200", "body": f"Payload: {answer}"}
 
     except Exception as e:
         print(f"Exception: {e}")
