@@ -12,7 +12,7 @@ def lambda_handler(event, context):
     print(f"Payload: {(payload := event.get('queryStringParameters'))}")
     try:
         x, y = float(payload["x"]), float(payload["y"])
-        payload["z"] = {" ": x+y, "-": x-y, "*": x*y, "/": x/y}[payload["op"]]
+        payload["z"] = {"+": x+y, "-": x-y, "*": x*y, "/": x/y}[payload["op"]]
         with tempfile.TemporaryDirectory() as tempdir_path:
             path = os.path.join(tempdir_path, (file_name := f"{'-'.join('-'.join(str(datetime.datetime.now()).split(':')).split())}.txt"))
             with open(path, "w") as file_writer:
