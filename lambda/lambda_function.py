@@ -19,7 +19,7 @@ def lambda_handler(event, context):
                 file_writer.write(json.dumps(payload, indent=4))
             print(glob.glob(f"{tempdir_path}/*"))
             s3.upload_file(path, os.environ["BUCKET"], file_name)
-        return {"statusCode": "200", "body": f"Payload: {payload}"}
+        return {"statusCode": "200", "body": json.dumps(payload)}
 
     except Exception as e:
         print(f"Exception: {e}")
