@@ -10,9 +10,10 @@
 #     aws_sqs as sqs,
 #     core
 # )
-from aws_cdk import core
-from aws_cdk import aws_s3 as s3
 from aws_cdk import aws_dynamodb as dynamodb
+from aws_cdk import aws_lambda as lambda_
+from aws_cdk import aws_s3 as s3
+from aws_cdk import core
 
 
 class CdkStack(core.Stack):
@@ -21,7 +22,7 @@ class CdkStack(core.Stack):
         prefix = "vickk73"
         table = dynamodb.Table(self, f"{prefix}dynamodb", partition_key=dynamodb.Attribute(name="id", type=dynamodb.AttributeType.STRING), removal_policy=core.RemovalPolicy.DESTROY)
         bucket = s3.Bucket(self, f"{prefix}s3", removal_policy=core.RemovalPolicy.DESTROY)
-        # handler = lambda_.Function(self, f"{prefix}lambda", runtime=lambda_.Runtime.PYTHON_3_8, handler="lambda_function.lambda_handler", code=lambda_.Code.asset("lambda"), environment=dict(BUCKET=bucket.bucket_name, TABLE_NAME=table.table_name))
+        handler = lambda_.Function(self, f"{prefix}lambda", runtime=lambda_.Runtime.PYTHON_3_8, handler="lambda_function.lambda_handler", code=lambda_.Code.asset("lambda"), environment=dict(BUCKET=bucket.bucket_name, TABLE_NAME=table.table_name))
         # table.grant_read_write_data(handler)
         # bucket.grant_read_write(handler)
         # api = apigateway.RestApi(self, f"{prefix}api", rest_api_name=f"{prefix}api", description=f"{prefix} rest api gateway.")
