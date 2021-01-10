@@ -12,15 +12,15 @@
 # )
 from aws_cdk import core
 from aws_cdk import aws_s3 as s3
+from aws_cdk import aws_dynamodb as dynamodb
 
 
 class CdkStack(core.Stack):
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
         prefix = "vickk73"
-        s3.Bucket(self, f"{prefix}s3", removal_policy=core.RemovalPolicy.DESTROY, encryption=s3.BucketEncryption.KMS_MANAGED)
-        # table = dynamodb.Table(self, f"{prefix}dynamodb", partition_key=dynamodb.Attribute(name="id", type=dynamodb.AttributeType.STRING))
-        # bucket = s3.Bucket(self, f"{prefix}s3")
+        table = dynamodb.Table(self, f"{prefix}dynamodb", partition_key=dynamodb.Attribute(name="id", type=dynamodb.AttributeType.STRING), removal_policy=core.RemovalPolicy.DESTROY)
+        bucket = s3.Bucket(self, f"{prefix}s3", removal_policy=core.RemovalPolicy.DESTROY)
         # handler = lambda_.Function(self, f"{prefix}lambda", runtime=lambda_.Runtime.PYTHON_3_8, handler="lambda_function.lambda_handler", code=lambda_.Code.asset("lambda"), environment=dict(BUCKET=bucket.bucket_name, TABLE_NAME=table.table_name))
         # table.grant_read_write_data(handler)
         # bucket.grant_read_write(handler)
