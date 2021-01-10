@@ -18,7 +18,7 @@ class CdkStack(core.Stack):
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
         prefix = "vickk73"
-        s3.Bucket(self, f"{prefix}s3", removal_policy=core.RemovalPolicy.DESTROY)
+        s3.Bucket(self, f"{prefix}s3", removal_policy=core.RemovalPolicy.DESTROY, encryption=s3.BucketEncryption.KMS_MANAGED)
         # table = dynamodb.Table(self, f"{prefix}dynamodb", partition_key=dynamodb.Attribute(name="id", type=dynamodb.AttributeType.STRING))
         # bucket = s3.Bucket(self, f"{prefix}s3")
         # handler = lambda_.Function(self, f"{prefix}lambda", runtime=lambda_.Runtime.PYTHON_3_8, handler="lambda_function.lambda_handler", code=lambda_.Code.asset("lambda"), environment=dict(BUCKET=bucket.bucket_name, TABLE_NAME=table.table_name))
