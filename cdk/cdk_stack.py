@@ -13,7 +13,7 @@ class CdkStack(core.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # prefix for resource names
-        prefix = "johnlee"
+        prefix = "vickk73"
 
         # creating s3 bucket
         bucket = s3.Bucket(self, f"{prefix}s3", removal_policy=core.RemovalPolicy.DESTROY)
