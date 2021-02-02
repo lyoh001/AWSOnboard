@@ -9,4 +9,5 @@ aws_cdk.aws_sns
 aws_cdk.aws_sns_subscriptions
 aws_cdk.aws_sqs
 aws_cdk.core
+black
 boto3

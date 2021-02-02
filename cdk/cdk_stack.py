@@ -16,24 +16,58 @@ class CdkStack(core.Stack):
         prefix = "vickk73"
 
         # creating s3 bucket
-        bucket = s3.Bucket(self, f"{prefix}s3", removal_policy=core.RemovalPolicy.DESTROY)
+        bucket = s3.Bucket(
+            self, f"{prefix}s3", removal_policy=core.RemovalPolicy.DESTROY
+        )
 
         # creating dynamodb
-        table = dynamodb.Table(self, f"{prefix}dynamodb", partition_key=dynamodb.Attribute(name="id", type=dynamodb.AttributeType.STRING), removal_policy=core.RemovalPolicy.DESTROY)
+        table = dynamodb.Table(
+            self,
+            f"{prefix}dynamodb",
+            partition_key=dynamodb.Attribute(
+                name="id", type=dynamodb.AttributeType.STRING
+            ),
+            removal_policy=core.RemovalPolicy.DESTROY,
+        )
 
         # creating sns and sns sub
         topic = sns.Topic(self, f"{prefix}sns", display_name=f"{prefix} sns")
         topic.add_subscription(subs.SmsSubscription(phone_number="61410844028"))
 
         # creating sqs
-        queue = sqs.Queue(self, f"{prefix}sqs", visibility_timeout=core.Duration.seconds(300))
+        queue = sqs.Queue(
+            self, f"{prefix}sqs", visibility_timeout=core.Duration.seconds(300)
+        )
 
         # creating lambda
-        handler = lambda_.Function(self, f"{prefix}lambda", runtime=lambda_.Runtime.PYTHON_3_8, handler="lambda_function.lambda_handler", code=lambda_.Code.asset("lambda"), environment=dict(BUCKET_NAME=bucket.bucket_name, TABLE_NAME=table.table_name, SNS_ARN=topic.topic_arn))
+        handler = lambda_.Function(
+            self,
+            f"{prefix}lambda",
+            runtime=lambda_.Runtime.PYTHON_3_8,
+            handler="lambda_function.lambda_handler",
+            code=lambda_.Code.asset("lambda"),
+            environment=dict(
+                BUCKET_NAME=bucket.bucket_name,
+                TABLE_NAME=table.table_name,
+                SNS_ARN=topic.topic_arn,
+            ),
+        )
 
         # creating api gateway
-        api = apigateway.RestApi(self, f"{prefix}api", rest_api_name=f"{prefix}api", description=f"{prefix} rest api gateway.", endpoint_configuration={"types": [apigateway.EndpointType.REGIONAL]})
-        api.root.add_method("GET", apigateway.LambdaIntegration(handler, request_templates={"application/json": '{ "statusCode": "200" }'}))
+        api = apigateway.RestApi(
+            self,
+            f"{prefix}api",
+            rest_api_name=f"{prefix}api",
+            description=f"{prefix} rest api gateway.",
+            endpoint_configuration={"types": [apigateway.EndpointType.REGIONAL]},
+        )
+        api.root.add_method(
+            "GET",
+            apigateway.LambdaIntegration(
+                handler,
+                request_templates={"application/json": '{ "statusCode": "200" }'},
+            ),
+        )
 
         # creating and defining iam role permission
         bucket.grant_read_write(handler)
