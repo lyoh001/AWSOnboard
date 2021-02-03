@@ -13,17 +13,17 @@ class CdkStack(core.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # prefix for resource names
-        prefix = "vickk73"
+        prefix = "-apse2-vickk73"
 
         # creating s3 bucket
         bucket = s3.Bucket(
-            self, f"{prefix}s3", removal_policy=core.RemovalPolicy.DESTROY
+            self, f"s3{prefix}", removal_policy=core.RemovalPolicy.DESTROY
         )
 
         # creating dynamodb
         table = dynamodb.Table(
             self,
-            f"{prefix}dynamodb",
+            f"dynamodb{prefix}",
             partition_key=dynamodb.Attribute(
                 name="id", type=dynamodb.AttributeType.STRING
             ),
@@ -31,18 +31,18 @@ class CdkStack(core.Stack):
         )
 
         # creating sns and sns sub
-        topic = sns.Topic(self, f"{prefix}sns", display_name=f"{prefix} sns")
+        topic = sns.Topic(self, f"sns{prefix}", display_name=f"sns{prefix}")
         topic.add_subscription(subs.SmsSubscription(phone_number="61410844028"))
 
         # creating sqs
         queue = sqs.Queue(
-            self, f"{prefix}sqs", visibility_timeout=core.Duration.seconds(300)
+            self, f"sqs{prefix}", visibility_timeout=core.Duration.seconds(300)
         )
 
         # creating lambda
         handler = lambda_.Function(
             self,
-            f"{prefix}lambda",
+            f"lambda{prefix}",
             runtime=lambda_.Runtime.PYTHON_3_8,
             handler="lambda_function.lambda_handler",
             code=lambda_.Code.asset("lambda"),
@@ -56,9 +56,9 @@ class CdkStack(core.Stack):
         # creating api gateway
         api = apigateway.RestApi(
             self,
-            f"{prefix}api",
-            rest_api_name=f"{prefix}api",
-            description=f"{prefix} rest api gateway.",
+            f"api{prefix}",
+            rest_api_name=f"api{prefix}",
+            description=f"api{prefix}: rest api gateway.",
             endpoint_configuration={"types": [apigateway.EndpointType.REGIONAL]},
         )
         api.root.add_method(
@@ -75,7 +75,7 @@ class CdkStack(core.Stack):
         topic.grant_publish(handler)
 
         # creating vpc
-        # vpc = ec2.Vpc(self, f"{prefix}vpc", cidr="10.0.0.0/16")
+        # vpc = ec2.Vpc(self, f"vpc{prefix}", cidr="10.0.0.0/16")
         # selection = vpc.select_subnets(subnet_type=ec2.SubnetType.PRIVATE)
         # for subnet in selection.subnets:
         #     pass
