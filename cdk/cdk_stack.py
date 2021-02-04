@@ -12,7 +12,7 @@ class CdkStack(core.Stack):
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
-        # prefix for resource names
+        # prefix for resource name
         prefix = "-apse2-vickk73"
 
         # creating s3 bucket
