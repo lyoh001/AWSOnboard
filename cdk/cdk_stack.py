@@ -85,22 +85,22 @@ class CdkStack(core.Stack):
         # creating vpc
         vpc = ec2.Vpc(self, f"vpc{prefix}")
 
-        # # creating aurora cluster
-        # cluster = rds.ServerlessCluster(
-        #     self,
-        #     f"auroracluster{prefix}",
-        #     engine=rds.DatabaseClusterEngine.AURORA_POSTGRESQL,
-        #     parameter_group=rds.ParameterGroup.from_parameter_group_name(
-        #         self, "ParameterGroup", "default.aurora-postgresql10"
-        #     ),
-        #     default_database_name=f"db{prefix}",
-        #     vpc=vpc,
-        #     scaling=rds.ServerlessScalingOptions(
-        #         auto_pause=core.Duration.minutes(10),
-        #         min_capacity=rds.AuroraCapacityUnit.ACU_8,
-        #         max_capacity=rds.AuroraCapacityUnit.ACU_32,
-        #     ),
-        # )
+        # creating aurora cluster
+        cluster = rds.ServerlessCluster(
+            self,
+            f"auroracluster{prefix}",
+            engine=rds.DatabaseClusterEngine.AURORA_POSTGRESQL,
+            parameter_group=rds.ParameterGroup.from_parameter_group_name(
+                self, "ParameterGroup", "default.aurora-postgresql10"
+            ),
+            default_database_name=f"db{prefix}",
+            vpc=vpc,
+            scaling=rds.ServerlessScalingOptions(
+                auto_pause=core.Duration.minutes(10),
+                min_capacity=rds.AuroraCapacityUnit.ACU_8,
+                max_capacity=rds.AuroraCapacityUnit.ACU_32,
+            ),
+        )
 
         # # creating lambda
         # handler = lambda_.Function(
