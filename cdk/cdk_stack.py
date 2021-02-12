@@ -93,13 +93,8 @@ class CdkStack(core.Stack):
             parameter_group=rds.ParameterGroup.from_parameter_group_name(
                 self, "ParameterGroup", "default.aurora-postgresql10"
             ),
-            default_database_name=f"db",
+            default_database_name="db",
             vpc=vpc,
-            scaling=rds.ServerlessScalingOptions(
-                auto_pause=core.Duration.minutes(10),
-                min_capacity=rds.AuroraCapacityUnit.ACU_8,
-                max_capacity=rds.AuroraCapacityUnit.ACU_32,
-            ),
         )
 
         # creating lambda
@@ -113,7 +108,7 @@ class CdkStack(core.Stack):
             environment=dict(
                 CLUSTER_ARN=cluster.cluster_arn,
                 SECRET_ARN=cluster.secret.secret_arn,
-                DB_NAME=f"db{prefix}",
+                DB_NAME="db",
                 AWS_PYTHON_CONNECTION_REUSE_ENABLED="1",
             ),
         )
