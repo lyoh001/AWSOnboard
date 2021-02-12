@@ -125,5 +125,5 @@ class CdkStack(core.Stack):
         #     ),
         # )
 
-        # cfn output
-        core.CfnOutput(self, "api_url", value=api.url)
+        # # cfn output
+        # core.CfnOutput(self, "api_url", value=api.url)
