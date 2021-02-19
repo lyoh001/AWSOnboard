@@ -17,7 +17,7 @@ class CdkStack(core.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # prefix for resource name
-        prefix = "-apse2-cdkstack"
+        prefix = "-apse2-appstack"
 
         # creating s3 bucket
         bucket = s3.Bucket(
