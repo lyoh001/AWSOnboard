@@ -154,7 +154,7 @@ class CdkStack(core.Stack):
         waf_rules.append(geoblock_rule)
 
         # Create the Waf ACL
-        WebACL = waf.CfnWebACL(
+        webacl = waf.CfnWebACL(
             self,
             f"{prefix}webacl",
             default_action=waf.CfnWebACL.DefaultActionProperty(allow={}),
@@ -172,7 +172,7 @@ class CdkStack(core.Stack):
         waf.CfnWebACLAssociation(
             self,
             f"{prefix}waf",
-            web_acl_arn=WebACL.attr_arn,
+            web_acl_arn=webacl.attr_arn,
             resource_arn=api.arn_for_execute_api(),
         )
 
