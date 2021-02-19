@@ -17,7 +17,7 @@ class CdkStack(core.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # prefix for resource name
-        prefix = "-apse2-appstack"
+        prefix = "apse2appstack"
 
         # creating s3 bucket
         bucket = s3.Bucket(
@@ -36,7 +36,7 @@ class CdkStack(core.Stack):
 
         # creating sns and sns sub
         topic = sns.Topic(self, f"sns{prefix}", display_name=f"sns{prefix}")
-        topic.add_subscription(subs.SmsSubscription(phone_number="yourmobnumberhere"))
+        topic.add_subscription(subs.SmsSubscription(phone_number="61410844028"))
 
         # creating sqs
         queue = sqs.Queue(
