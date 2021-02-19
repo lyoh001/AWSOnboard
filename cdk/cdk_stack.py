@@ -70,6 +70,7 @@ class CdkStack(core.Stack):
                 request_templates={"application/json": '{ "statusCode": "200" }'},
             ),
         )
+        api_arn = f"arn:aws:apigateway:{core.Stack.of(self).region}::/restapis/{api.rest_api_id}/stages/{api.deployment_stage.stage_name}"
 
         # creating waf
         waf_rules = []
@@ -170,10 +171,7 @@ class CdkStack(core.Stack):
 
         # Associate it with the resource provided.
         waf.CfnWebACLAssociation(
-            self,
-            f"{prefix}waf",
-            web_acl_arn=webacl.attr_arn,
-            resource_arn=api.arn_for_execute_api(),
+            self, f"{prefix}waf", web_acl_arn=webacl.attr_arn, resource_arn=api_arn
         )
 
         # creating and defining iam role permission
