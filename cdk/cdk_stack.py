@@ -74,7 +74,7 @@ class CdkStack(core.Stack):
 
         # creating waf
         waf_rules = []
-        # 1, AWS general rules
+        # 1 AWS general rules
         aws_managed_rules = waf.CfnWebACL.RuleProperty(
             name="AWS-AWSManagedRulesCommonRuleSet",
             priority=1,
@@ -96,7 +96,7 @@ class CdkStack(core.Stack):
         )
         waf_rules.append(aws_managed_rules)
 
-        # 2, AWS AnonIPAddress
+        # 2 AWS AnonIPAddress
         aws_anoniplist = waf.CfnWebACL.RuleProperty(
             name="awsAnonymousIP",
             priority=2,
