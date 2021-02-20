@@ -6,12 +6,12 @@ from aws_cdk import aws_rds as rds
 from aws_cdk import core
 
 
-class CdkAurora(core.Stack):
+class ServerlessAurora(core.Stack):
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # prefix for resource name
-        prefix = "apse2aurora"
+        prefix = "apse2serverlessaurora"
 
         # creating vpc
         vpc = ec2.Vpc(self, f"vpc{prefix}")

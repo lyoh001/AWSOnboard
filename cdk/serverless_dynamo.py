@@ -9,12 +9,12 @@ from aws_cdk import aws_wafv2 as waf
 from aws_cdk import core
 
 
-class CdkStack(core.Stack):
+class ServerlessDynamo(core.Stack):
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs) -> None:
         super().__init__(scope, construct_id, **kwargs)
 
         # prefix for resource name
-        prefix = "apse2stack"
+        prefix = "apse2serverlessdynamo"
 
         # creating s3 bucket
         bucket = s3.Bucket(

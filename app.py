@@ -1,12 +1,14 @@
 from aws_cdk import core
 
-from cdk.cdk_aurora import CdkAurora
-from cdk.cdk_stack import CdkStack
+from cdk.serverless_aurora import ServerlessAurora
+from cdk.serverless_dynamo import ServerlessDynamo
 
-cdkstack = core.App()
-CdkStack(cdkstack, "cdkstack", env={"region": "ap-southeast-2"})
-cdkstack.synth()
+# ServerlessDynamo Stack
+serverlessdynamo = core.App()
+ServerlessDynamo(serverlessdynamo, "serverlessdynamo", env={"region": "ap-southeast-2"})
+serverlessdynamo.synth()
 
-# cdkaurora = core.App()
-# CdkAurora(cdkaurora, "cdkaurora", env={"region": "ap-southeast-2"})
-# cdkaurora.synth()
+# ServerlessAurora Stack
+serverlessaurora = core.App()
+ServerlessAurora(serverlessaurora, "serverlessaurora", env={"region": "ap-southeast-2"})
+serverlessaurora.synth()
