@@ -33,7 +33,7 @@ class ServerlessDynamo(core.Stack):
 
         # creating sns and sns sub
         topic = sns.Topic(self, f"sns{prefix}", display_name=f"sns{prefix}")
-        topic.add_subscription(subs.SmsSubscription(phone_number="61410844028"))
+        topic.add_subscription(subs.SmsSubscription(phone_number="6140000000"))
 
         # creating sqs
         queue = sqs.Queue(
