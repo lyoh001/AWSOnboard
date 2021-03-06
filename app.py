@@ -8,6 +8,7 @@ serverlessdynamo = core.App()
 ServerlessDynamo(serverlessdynamo, "serverlessdynamo", env={"region": "ap-southeast-2"})
 serverlessdynamo.synth()
 
+
 # # ServerlessAurora Stack
 # serverlessaurora = core.App()
 # ServerlessAurora(serverlessaurora, "serverlessaurora", env={"region": "ap-southeast-2"})
