@@ -1,4 +1,5 @@
 from aws_cdk import aws_s3 as s3
+from aws_cdk import aws_sqs as sqs
 from aws_cdk import core
 
 
@@ -12,3 +13,6 @@ class ServerlessTest(core.Stack):
         bucket = s3.Bucket(
             self, f"s3{prefix}", removal_policy=core.RemovalPolicy.DESTROY
         )
+
+        # creating sqs
+        sqs = sqs.Queue(self, f"sqs{prefix}", removal_policy=core.RemovalPolicy.DESTROY)
