@@ -15,4 +15,9 @@ class ServerlessTest(core.Stack):
         )
 
         # creating sqs
-        sqs = sqs.Queue(self, f"sqs{prefix}", removal_policy=core.RemovalPolicy.DESTROY)
+        queue = sqs.Queue(
+            self,
+            f"sqs{prefix}",
+            removal_policy=core.RemovalPolicy.DESTROY,
+            visibility_timeout=core.Duration.seconds(300),
+        )
