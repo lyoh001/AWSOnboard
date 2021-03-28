@@ -1,3 +1,4 @@
+from aws_cdk import aws_ec2 as ec2
 from aws_cdk import aws_s3 as s3
 from aws_cdk import aws_sqs as sqs
 from aws_cdk import core
@@ -18,6 +19,14 @@ class ServerlessTest(core.Stack):
         queue = sqs.Queue(
             self,
             f"sqs{prefix}",
-            removal_policy=core.RemovalPolicy.DESTROY,
             visibility_timeout=core.Duration.seconds(300),
+            removal_policy=core.RemovalPolicy.DESTROY,
+        )
+
+        # creating vpc
+        vpc = ec2.Vpc(
+            self,
+            f"vpc{prefix}",
+            cidr="10.0.0.0/16",
+            removal_policy=core.RemovalPolicy.DESTROY,
         )
