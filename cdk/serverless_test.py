@@ -11,21 +11,21 @@ class ServerlessTest(core.Stack):
         prefix = "apse2serverlesstest"
 
         # creating s3 bucket
-        bucket = s3.Bucket(
-            self, f"s3{prefix}", removal_policy=core.RemovalPolicy.DESTROY
-        )
+        # bucket = s3.Bucket(
+        #     self, f"s3{prefix}", removal_policy=core.RemovalPolicy.DESTROY
+        # )
 
-        # creating sqs
-        queue = sqs.Queue(
-            self,
-            f"sqs{prefix}",
-            visibility_timeout=core.Duration.seconds(300),
-            removal_policy=core.RemovalPolicy.DESTROY,
-        )
+        # # creating sqs
+        # queue = sqs.Queue(
+        #     self,
+        #     f"sqs{prefix}",
+        #     visibility_timeout=core.Duration.seconds(300),
+        #     removal_policy=core.RemovalPolicy.DESTROY,
+        # )
 
-        # creating vpc
-        vpc = ec2.Vpc(
-            self,
-            f"vpc{prefix}",
-            cidr="10.61.64.0/24",
-        )
+        # # creating vpc
+        # vpc = ec2.Vpc(
+        #     self,
+        #     f"vpc{prefix}",
+        #     cidr="10.61.64.0/24",
+        # )
