@@ -27,6 +27,5 @@ class ServerlessTest(core.Stack):
         vpc = ec2.Vpc(
             self,
             f"vpc{prefix}",
-            cidr="10.0.0.0/16",
-            removal_policy=core.RemovalPolicy.DESTROY,
+            cidr="10.61.64.0/24",
         )
