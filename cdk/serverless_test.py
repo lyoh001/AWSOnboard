@@ -29,7 +29,9 @@ class ServerlessTest(core.Stack):
         table = dynamodb.Table(
             self,
             f"{prefix}dynamodb",
-            partition_key=Attribute(name="id", type=dynamodb.AttributeType.STRING),
+            partition_key=dynamodb.Attribute(
+                name="id", type=dynamodb.AttributeType.STRING
+            ),
             removal_policy=core.RemovalPolicy.DESTROY,
         )
 
