@@ -1,4 +1,3 @@
-from attr import Attribute
 from aws_cdk import aws_dynamodb as dynamodb
 from aws_cdk import aws_ec2 as ec2
 from aws_cdk import aws_s3 as s3
@@ -10,7 +9,7 @@ class ServerlessTest(core.Stack):
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs):
         super().__init__(scope, construct_id, **kwargs)
 
-        prefix = "vickk73stackv2"
+        prefix = "vickk73stackv3"
 
         # # creating s3 bucket
         # bucket = s3.Bucket(
