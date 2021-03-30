@@ -27,13 +27,13 @@ class ServerlessTest(core.Stack):
         # creating dynamodb
         table = dynamodb.Table(
             self,
-            f"satellites",
-            # f"{prefix}dynamodb",
+            f"{prefix}dynamodb",
             partition_key=dynamodb.Attribute(
                 name="year", type=dynamodb.AttributeType.STRING
             ),
-            read_capacity=10,
-            write_capacity=10,
+            read_capacity=20,
+            write_capacity=20,
+            replication_regions=["us-east-1", "eu-west-1"],
             removal_policy=core.RemovalPolicy.DESTROY,
         )
 
