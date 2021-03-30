@@ -33,6 +33,7 @@ class ServerlessTest(core.Stack):
             ),
             # read_capacity=10,
             # write_capacity=10,
+            point_in_time_recovery=True,
             replication_regions=["us-east-1", "eu-west-1"],
             removal_policy=core.RemovalPolicy.DESTROY,
         )
