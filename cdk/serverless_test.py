@@ -31,8 +31,8 @@ class ServerlessTest(core.Stack):
             partition_key=dynamodb.Attribute(
                 name="year", type=dynamodb.AttributeType.STRING
             ),
-            read_capacity=10,
-            write_capacity=10,
+            # read_capacity=10,
+            # write_capacity=10,
             replication_regions=["us-east-1", "eu-west-1"],
             removal_policy=core.RemovalPolicy.DESTROY,
         )
