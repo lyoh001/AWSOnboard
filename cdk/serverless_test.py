@@ -9,7 +9,7 @@ class ServerlessTest(core.Stack):
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs):
         super().__init__(scope, construct_id, **kwargs)
 
-        prefix = "vickk73stackv3"
+        prefix = "vickk73stackv4"
 
         # # creating s3 bucket
         # bucket = s3.Bucket(
@@ -27,10 +27,13 @@ class ServerlessTest(core.Stack):
         # creating dynamodb
         table = dynamodb.Table(
             self,
-            f"{prefix}dynamodb",
+            f"satellites",
+            # f"{prefix}dynamodb",
             partition_key=dynamodb.Attribute(
-                name="id", type=dynamodb.AttributeType.STRING
+                name="year", type=dynamodb.AttributeType.STRING
             ),
+            read_capacity=10,
+            write_capacity=10,
             removal_policy=core.RemovalPolicy.DESTROY,
         )
 
