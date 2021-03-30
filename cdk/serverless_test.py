@@ -17,7 +17,6 @@ class ServerlessTest(core.Stack):
             f"{prefix}s3",
             block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
             encryption=s3.BucketEncryption.KMS,
-            enforce_sSL=True,
             removal_policy=core.RemovalPolicy.DESTROY,
         )
 
