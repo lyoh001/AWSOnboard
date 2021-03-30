@@ -12,9 +12,14 @@ class ServerlessTest(core.Stack):
         prefix = "vickk73stackv1"
 
         # # creating s3 bucket
-        # bucket = s3.Bucket(
-        #     self, f"{prefix}s3", removal_policy=core.RemovalPolicy.DESTROY
-        # )
+        bucket = s3.Bucket(
+            self,
+            f"{prefix}s3",
+            block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
+            encryption=s3.BucketEncryption.KMS,
+            enforce_sSL=True,
+            removal_policy=core.RemovalPolicy.DESTROY,
+        )
 
         # # creating sqs
         # queue = sqs.Queue(
@@ -25,18 +30,18 @@ class ServerlessTest(core.Stack):
         # )
 
         # creating dynamodb
-        table = dynamodb.Table(
-            self,
-            f"{prefix}dynamodb",
-            partition_key=dynamodb.Attribute(
-                name="year", type=dynamodb.AttributeType.STRING
-            ),
-            # read_capacity=10,
-            # write_capacity=10,
-            point_in_time_recovery=True,
-            replication_regions=["us-east-1", "eu-west-1"],
-            removal_policy=core.RemovalPolicy.DESTROY,
-        )
+        # table = dynamodb.Table(
+        #     self,
+        #     f"{prefix}dynamodb",
+        #     partition_key=dynamodb.Attribute(
+        #         name="year", type=dynamodb.AttributeType.STRING
+        #     ),
+        #     # read_capacity=10,
+        #     # write_capacity=10,
+        #     point_in_time_recovery=True,
+        #     replication_regions=["us-east-1", "eu-west-1"],
+        #     removal_policy=core.RemovalPolicy.DESTROY,
+        # )
 
         # # creating vpc
         # vpc = ec2.Vpc(

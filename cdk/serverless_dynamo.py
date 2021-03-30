@@ -28,6 +28,10 @@ class ServerlessDynamo(core.Stack):
             partition_key=dynamodb.Attribute(
                 name="id", type=dynamodb.AttributeType.STRING
             ),
+            # read_capacity=10,
+            # write_capacity=10,
+            # replication_regions=["us-east-1", "eu-west-1"],
+            point_in_time_recovery=False,
             removal_policy=core.RemovalPolicy.DESTROY,
         )
 
