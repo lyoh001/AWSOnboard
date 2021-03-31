@@ -9,7 +9,7 @@ class ServerlessTest(core.Stack):
     def __init__(self, scope: core.Construct, construct_id: str, **kwargs):
         super().__init__(scope, construct_id, **kwargs)
 
-        prefix = "vickk73stackv1"
+        prefix = "vickk73stackv2"
 
         # # creating s3 bucket
         bucket = s3.Bucket(
