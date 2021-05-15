@@ -23,8 +23,3 @@ The following CDK stack will deploy the following resources.
     - Write to S3.
     - Send msg to SNS.
 5. SNS will send SMS to mobile for alert.
-
-
-
-
-

@@ -1,8 +1,8 @@
 from aws_cdk import core
 
-from cdk.serverless_aurora import ServerlessAurora
-from cdk.serverless_dynamo import ServerlessDynamo
-from cdk.serverless_test import ServerlessTest
+from awscdk.serverless_aurora import ServerlessAurora
+from awscdk.serverless_dynamo import ServerlessDynamo
+from awscdk.serverless_test import ServerlessTest
 
 # # ServerlessTest Stack
 serverlesstest = core.App()
