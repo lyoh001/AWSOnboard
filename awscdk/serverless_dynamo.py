@@ -14,7 +14,7 @@ class ServerlessDynamo(core.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # prefix for resource name
-        prefix = "apse2serverlessdynamo"
+        prefix = "vickk73"
 
         # creating s3 bucket
         bucket = s3.Bucket(
