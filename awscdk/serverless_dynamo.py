@@ -105,7 +105,7 @@ class ServerlessDynamo(core.Stack):
             name="awsAnonymousIP",
             priority=2,
             override_action=waf.CfnWebACL.OverrideActionProperty(none={}),
-            statement=waf.CfnWebACL.StatementOneProperty(
+            statement=waf.CfnWebACL.StatementProperty(
                 managed_rule_group_statement=waf.CfnWebACL.ManagedRuleGroupStatementProperty(
                     name="AWSManagedRulesAnonymousIpList",
                     vendor_name="AWS",
@@ -125,7 +125,7 @@ class ServerlessDynamo(core.Stack):
             name="aws_Ipreputation",
             priority=3,
             override_action=waf.CfnWebACL.OverrideActionProperty(none={}),
-            statement=waf.CfnWebACL.StatementOneProperty(
+            statement=waf.CfnWebACL.StatementProperty(
                 managed_rule_group_statement=waf.CfnWebACL.ManagedRuleGroupStatementProperty(
                     name="AWSManagedRulesAmazonIpReputationList",
                     vendor_name="AWS",
@@ -145,7 +145,7 @@ class ServerlessDynamo(core.Stack):
             name="geoblocking_rule",
             priority=4,
             action=waf.CfnWebACL.RuleActionProperty(block={}),
-            statement=waf.CfnWebACL.StatementOneProperty(
+            statement=waf.CfnWebACL.StatementProperty(
                 geo_match_statement=waf.CfnWebACL.GeoMatchStatementProperty(
                     country_codes=["NZ"],
                 )
