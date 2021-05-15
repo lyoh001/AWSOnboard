@@ -12,21 +12,21 @@ class ServerlessTest(core.Stack):
         prefix = "vickk73stackv2"
 
         # # creating s3 bucket
-        bucket = s3.Bucket(
-            self,
-            f"{prefix}s3",
-            block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
-            encryption=s3.BucketEncryption.KMS,
-            removal_policy=core.RemovalPolicy.DESTROY,
-        )
-
-        # # creating sqs
-        # queue = sqs.Queue(
+        # bucket = s3.Bucket(
         #     self,
-        #     f"{prefix}sqs",
-        #     visibility_timeout=core.Duration.seconds(300),
+        #     f"{prefix}s3",
+        #     block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
+        #     encryption=s3.BucketEncryption.KMS,
         #     removal_policy=core.RemovalPolicy.DESTROY,
         # )
+
+        # # creating sqs
+        queue = sqs.Queue(
+            self,
+            f"{prefix}sqs",
+            visibility_timeout=core.Duration.seconds(300),
+            removal_policy=core.RemovalPolicy.DESTROY,
+        )
 
         # creating dynamodb
         # table = dynamodb.Table(
