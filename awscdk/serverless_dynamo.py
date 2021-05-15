@@ -83,7 +83,7 @@ class ServerlessDynamo(core.Stack):
             name="AWS-AWSManagedRulesCommonRuleSet",
             priority=1,
             override_action=waf.CfnWebACL.OverrideActionProperty(none={}),
-            statement=waf.CfnWebACL.StatementOneProperty(
+            statement=waf.CfnWebACL.StatementProperty(
                 managed_rule_group_statement=waf.CfnWebACL.ManagedRuleGroupStatementProperty(
                     name="AWSManagedRulesCommonRuleSet",
                     vendor_name="AWS",
