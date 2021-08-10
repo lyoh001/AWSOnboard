@@ -11,7 +11,7 @@ class ServerlessAurora(core.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # prefix for resource name
-        prefix = "apse2serverlessaurora"
+        prefix = "serverlessaurora"
 
         # creating vpc
         vpc = ec2.Vpc(self, f"vpc{prefix}")
