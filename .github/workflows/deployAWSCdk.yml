@@ -38,4 +38,4 @@ jobs:
     - name: Run CDK
       run: |
         cdk diff
-        cdk deploy --require-approval=never
+        cdk deploy --all --require-approval=never
