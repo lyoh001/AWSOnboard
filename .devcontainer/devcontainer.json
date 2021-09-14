@@ -19,6 +19,6 @@
 		"visualstudioexptteam.vscodeintellicode"
 	],
 	"forwardPorts": [
-		10004
+		10000
 	]
 }

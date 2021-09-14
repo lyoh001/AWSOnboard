@@ -20,4 +20,4 @@ RUN DEBIAN_FRONTEND=noninteractive \
     && sudo npm install -g aws-cdk \
     && python3 -m pip install --upgrade pip
 
-EXPOSE 10004
+EXPOSE 10000
