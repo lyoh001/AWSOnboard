@@ -1,24 +1,25 @@
 {
-	"name": "CDK Container",
+	"name": "Dev Container",
 	"build": {
 		"dockerfile": "Dockerfile",
 	},
 	"settings": {
-		"terminal.integrated.profile.linux": "/bin/bash"
+		"terminal.integrated.defaultProfile.linux": "zsh",
 	},
 	"extensions": [
-		"amazonwebservices.aws-toolkit-vscode",
-		"ms-azuretools.vscode-azurefunctions",
-		"ms-azuretools.vscode-azurelogicapps",
+		"ms-dotnettools.vscode-dotnet-runtime",
+		"ms-vscode.azure-account",
 		"ms-azuretools.vscode-azureresourcegroups",
+		"ms-azuretools.vscode-azurefunctions",
 		"ms-azuretools.vscode-azurestaticwebapps",
 		"ms-azuretools.vscode-bicep",
-		"ms-dotnettools.vscode-dotnet-runtime",
+		"github.copilot",
 		"ms-python.python",
-		"ms-vscode.azure-account",
-		"visualstudioexptteam.vscodeintellicode"
+		"sourcery.sourcery",
+		"rangav.vscode-thunder-client",
+		"visualstudioexptteam.vscodeintellicode",
 	],
 	"forwardPorts": [
-		10000
+		7000
 	]
 }
