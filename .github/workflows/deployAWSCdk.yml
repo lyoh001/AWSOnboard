@@ -1,0 +1,41 @@
+name: AWSCdk
+on: [push]
+
+env:
+  AWS_REGION: "ap-southeast-2"
+  NODE_VERSION: "12"
+  PYTHON_VERSION: "3.8"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout GitHub Action
+      uses: actions/checkout@v2
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ${{ env.AWS_REGION }}
+
+    - name: Setup Python ${{ env.PYTHON_VERSION }} Environment
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Setup Node ${{ env.NODE_VERSION }} Environment
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Install requirements
+      run: |
+        pip3 install -r requirements.txt
+        npm install -g aws-cdk
+
+    - name: Run CDK
+      run: |
+        cdk diff
+        cdk deploy --all --require-approval=never
