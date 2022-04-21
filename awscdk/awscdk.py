@@ -10,10 +10,10 @@ class AWSCdk(core.Stack):
         super().__init__(scope, construct_id, **kwargs)
 
         # ServerlessTest Stack
-        ServerlessTest(self, "serverlesstest", env={"region": "ap-southeast-2"})
+        # ServerlessTest(self, "serverlesstest", env={"region": "ap-southeast-2"})
 
         # ServerlessDynamo Stack
         # ServerlessDynamo(self, "serverlessdynamo", env={"region": "ap-southeast-2"})
 
         # ServerlessAurora Stack
-        # ServerlessAurora(self, "serverlessaurora", env={"region": "ap-southeast-2"})
+        ServerlessAurora(self, "serverlessaurora", env={"region": "ap-southeast-2"})

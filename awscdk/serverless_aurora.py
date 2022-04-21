@@ -19,12 +19,12 @@ class ServerlessAurora(core.Stack):
         # creating aurora cluster
         cluster = rds.ServerlessCluster(
             self,
-            f"auroracluster{prefix}",
-            engine=rds.DatabaseClusterEngine.AURORA_POSTGRESQL,
-            parameter_group=rds.ParameterGroup.from_parameter_group_name(
-                self, "ParameterGroup", "default.aurora-postgresql10"
-            ),
-            # default_database_name="db",
+            f"cluster_{prefix}",
+            engine=rds.DatabaseClusterEngine.AURORA_MYSQL,
+            enable_data_api=True,
+            default_database_name="db",
+            deletion_protection=False,
+            removal_policy=core.RemovalPolicy.DESTROY,
             vpc=vpc,
         )
 
@@ -34,7 +34,7 @@ class ServerlessAurora(core.Stack):
             f"lambda{prefix}",
             runtime=lambda_.Runtime.PYTHON_3_8,
             code=lambda_.Code.asset("lambda"),
-            handler="lambda_function.lambda_handler",
+            handler="lambda_aurora.lambda_handler",
             memory_size=1024,
             environment=dict(
                 CLUSTER_ARN=cluster.cluster_arn,
