@@ -14,26 +14,23 @@ class ServerlessTest(core.Stack):
         prefix = "serverlesstest"
 
         # creating s3 bucket
-        bucket = s3.Bucket(
-            self,
-            f"{prefix}s3",
-            block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
-            encryption=s3.BucketEncryption.KMS,
-            removal_policy=core.RemovalPolicy.DESTROY,
-        )
+        # bucket = s3.Bucket(
+        #     self,
+        #     f"{prefix}s3",
+        #     block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
+        #     encryption=s3.BucketEncryption.KMS,
+        #     removal_policy=core.RemovalPolicy.DESTROY,
+        # )
 
-        # creating lambda
-        handler = lambda_.Function(
-            self,
-            f"lambda{prefix}",
-            runtime=lambda_.Runtime.PYTHON_3_8,
-            code=lambda_.Code.asset("lambda"),
-            handler="lambda_function.lambda_handler",
-            memory_size=1024,
-        )
-
-        # prefix for resource name
-        prefix = "serverlessaurora"
+        # # creating lambda
+        # handler = lambda_.Function(
+        #     self,
+        #     f"lambda{prefix}",
+        #     runtime=lambda_.Runtime.PYTHON_3_8,
+        #     code=lambda_.Code.asset("lambda"),
+        #     handler="lambda_function.lambda_handler",
+        #     memory_size=1024,
+        # )
 
         # creating vpc
         vpc = ec2.Vpc(self, f"vpc{prefix}")
@@ -43,8 +40,9 @@ class ServerlessTest(core.Stack):
             self,
             f"auroracluster{prefix}",
             engine=rds.DatabaseClusterEngine.AURORA_MYSQL,
+            deletion_protection=False,
             enable_data_api=True,
             removal_policy=core.RemovalPolicy.DESTROY,
-            deletion_protection=False,
+            scaling=rds.ServerlessScalingOptions(auto_pause=Duration.seconds(0)),
             vpc=vpc,
         )
