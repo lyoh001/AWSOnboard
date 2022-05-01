@@ -1,4 +1,3 @@
-import aws_cdk as cdk
 from aws_cdk import aws_apigatewayv2 as apigatewayv2
 from aws_cdk import aws_apigatewayv2_integrations as apigatewayv2_integrations
 from aws_cdk import aws_ec2 as ec2
@@ -44,6 +43,5 @@ class ServerlessTest(core.Stack):
             deletion_protection=False,
             enable_data_api=True,
             removal_policy=core.RemovalPolicy.DESTROY,
-            scaling=rds.ServerlessScalingOptions(auto_pause=cdk.Duration.seconds(0)),
             vpc=vpc,
         )
